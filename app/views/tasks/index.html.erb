@@ -1,0 +1,27 @@
+<h1>Tasks#index</h1>
+<p>Find me in app/views/tasks/index.html.erb</p>
+<table>
+  <tr>
+    <th>Id</th><th>Title</th><th>Description</th><th></th><th></th><th></th>
+  </tr>
+  <% @tasks.each do |task| %>
+  <tr>
+    <td><%= task.id %></td>
+    <td><%= task.title %></td>
+    <td><%= task.description %></td>
+    <td>
+      <% if task.completed %>
+        <%= link_to '✅', done_back_task_path(task), method: :post %>
+      <% else %>
+        <%= link_to '☑️', done_task_path(task), method: :post %>
+      <% end %>
+    </td>
+    <td>〜％完了</td>
+    <td><%= link_to 'もっとみる', task_path(task) %></td>
+    <td><%= link_to '編集', edit_task_path(task) %></td>
+    <td><%= link_to '完了', done_task_path(task) %></td>
+    <td><%= link_to '削除', task_path(task), method: :delete , data: {confirm: "削除しますか？"}%></td>
+  </tr>
+  <% end %>
+</table>
+<p><%= link_to 'ToDoの作成', new_task_path %></p>

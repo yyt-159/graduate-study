@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_24_101158) do
+ActiveRecord::Schema.define(version: 2021_11_25_124338) do
 
   create_table "sub_tasks", force: :cascade do |t|
     t.string "title", null: false
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2021_11_24_101158) do
     t.string "username"
     t.integer "user_gain_point"
     t.integer "team_id", default: 1
+    t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["team_id"], name: "index_users_on_team_id"

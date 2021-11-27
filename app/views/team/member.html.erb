@@ -1,0 +1,13 @@
+<h1>Team#member</h1>
+<p>Find me in app/views/team/member.html.erb</p>
+<h3>チームメンバー</h3>
+<% @my_team_members.each do |m| %>
+  <% unless m.admin %>
+      <div>
+    <h4><%=m.username%></h4>
+    <p>獲得ポイント数</p>
+    <p>終わったタスク数</p>
+  </div>
+  <% end %>
+<% end %>
+<%= link_to 'チームメンバーを確認する', "/team/#{current_user.team_id}/index" %>

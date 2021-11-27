@@ -2,7 +2,7 @@
 <p>Find me in app/views/tasks/index.html.erb</p>
 <table>
   <tr>
-    <th>Id</th><th>Title</th><th>Description</th><th></th><th></th><th></th>
+    <th>Id</th><th>Title</th><th>Description</th><th>完了</th><th>達成度</th><th></th>
   </tr>
   <% @tasks.each do |task| %>
   <tr>
@@ -16,7 +16,7 @@
         <%= link_to '☑️', done_task_path(task), method: :post %>
       <% end %>
     </td>
-    <td>〜％完了</td>
+    <td><%= task_progress_calcu(task) %></td>
     <td><%= link_to 'もっとみる', task_path(task) %></td>
     <td><%= link_to '編集', edit_task_path(task) %></td>
     <td><%= link_to '完了', done_task_path(task) %></td>

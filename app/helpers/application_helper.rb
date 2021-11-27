@@ -34,4 +34,15 @@ module ApplicationHelper
     end
   end
 
+# 関数名: who_is_this?(user_id)
+# 引数: タスクが持つuser_id
+# 説明: タスクからusernameを引っ張る
+# 使用場所: app/views/team/index.html.erb
+  def who_is_this?(user_id)
+    user = User.find_by(id:user_id)
+    if user
+      user.username
+    end
+  end#タスクの方でも書いた。ドライじゃなくてすみません。
+
 end

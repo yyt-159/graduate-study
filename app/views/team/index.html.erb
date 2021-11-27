@@ -1,0 +1,29 @@
+<h1>Team#index</h1>
+<p>Find me in app/views/team/index.html.erb</p>
+<h3>タスクリスト</h3>
+<table>
+  <tr>
+    <th>タスク名</th><th>user_id</th><th>Description</th><th>完了</th><th>日時</th><th>達成度</th>
+  </tr>
+  <% @tasks.each do |task| %>
+  <tr>
+    <td><%= task.title %></td>
+    <td><%= who_is_this?(task.user_id) %></td>
+    <td><%= task.description %></td>
+    <td>
+      <% if task.completed %>
+        ✅
+      <% else %>
+        ☑️
+      <% end %>
+    </td>
+    <% if task.target_at %>
+      <%target_date = task.target_at %>
+      <td style='color:<%= is_deadline_over?(target_date) %>'><%= target_date.year %>/<%= target_date.month %>/<%= target_date.day %></td>
+    <td><%=remaining_day?(target_date)%></td>
+    <% end %>
+    <td><%= task_progress_calcu(task) %></td>
+  </tr>
+  <% end %>
+</table>
+<%= link_to 'チームメンバーを確認する', "/team/#{current_user.team_id}/member" %>

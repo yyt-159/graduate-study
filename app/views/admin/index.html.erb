@@ -1,0 +1,77 @@
+<h1>Admin#index</h1>
+<p>Find me in app/views/admin/index.html.erb</p>
+<h2>users</h2>
+<% @users.each do |user| %>
+  <div>
+    <h4>id</h4>
+    <p><%= user.id %></p>
+  </div>
+  <div>
+    <h4>username</h4>
+    <p><%= user.username %></p>
+  </div>
+  <div>
+    <h4>email</h4>
+    <p><%= user.email %></p>
+  </div>
+  <div>
+    <h4>user_gain_point</h4>
+    <p><%= user.user_gain_point %></p>
+  </div>
+  <div>
+    <h4>team_id</h4>
+    <p><%=user.team_id%></p>
+  </div>
+    <div>
+    <h4>tasks</h4>
+    <%user.tasks.each do |task|%>
+      <tr>
+        <td><%= task.id %></td>
+        <td><%= task.title %></td>
+        <td><%= task.description %></td>
+        <td>
+          <% if task.completed %>
+            <%= link_to '✅', done_back_task_path(task), method: :post %>
+          <% else %>
+            <%= link_to '☑️', done_task_path(task), method: :post %>
+          <% end %>
+        </td>
+        <td><%= task_progress_calcu(task) %></td>
+        <td><%= link_to 'もっとみる', task_path(task) %></td>
+        <td><%= link_to '編集', edit_task_path(task) %></td>
+        <td><%= link_to '削除', task_path(task), method: :delete , data: {confirm: "削除しますか？"}%></td>
+        </tr>
+    <% end %>
+  </div>
+  <p><%=link_to "編集する","/admin/edit/#{user.id}"%></p>
+  <p>~~~~~~~~~~~~~~</p>
+<% end %>
+
+<h2>teams</h2>
+<% @teams.each do |team| %>
+  <div>
+    <h4>id</h4>
+    <p><%= team.id %></p>
+  </div>
+  <div>
+   <h4>チームメンバー</h4>
+   <% users = User.where(team_id:team.id)%>
+   <% users.each do |u| %>
+      <h3>username</h3>
+      <p><%=u.username%></p>
+      <h3>タスク数</h3>
+      <p></p>
+      <h3>ポイント数</h3>
+      <p></p>
+   <% end %>
+  </div>
+  <div>
+    <h4>team_total_point</h4>
+    <p><%= team.team_total_point %></p>
+  </div>
+  <div>
+  <p><%=link_to "チームポイントをset","/admin/team/edit/#{team.id}"%></p>
+  </div>
+  <p>~~~~~~~~~~~~~~</p>
+<% end %>
+<%=link_to "チームポイントをリセット","/admin/reset/team_point", method: :post, data: {confirm: "本当にリセットしますか？"} %>

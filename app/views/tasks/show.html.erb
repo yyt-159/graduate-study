@@ -16,6 +16,10 @@
     <td><%=remaining_day?(target_date)%></td>
     <% end %>
   </tr>
+  <tr>
+    <th>達成度</th>
+    <td><%= task_progress_calcu(@task) %>%</td>
+  </tr>  
 </table>
 <p><%= link_to '編集', edit_task_path(@task) %></p>
 <p><%= link_to '一覧に戻る', tasks_url %></p>
@@ -36,6 +40,13 @@
     <% else %>
       <%= link_to '☑️', done_task_sub_task_path(@task.id,sub_task), method: :post %>
    <% end %>
+    </td>
+    <td>期日
+      <% if sub_task.target_at %>
+      <%target_date = sub_task.target_at %>
+      <td style='color:<%= is_deadline_over?(target_date) %>'><%= target_date.year %>/<%= target_date.month %>/<%= target_date.day %></td>
+    <td><%=remaining_day?(target_date)%></td>
+    <% end %>
     </td>
     <td><%= link_to '編集', edit_task_sub_task_path(@task.id,sub_task) %></td>
     <td><%= link_to '削除', task_sub_task_path(@task.id,sub_task), method: :delete, data: {confirm: "削除しますか？"} %></td>

@@ -1,0 +1,24 @@
+<h1>Admin#edit</h1>
+<p>Find me in app/views/admin/edit.html.erb</p>
+<%= form_for @user, url: "/admin/edit/update/#{@user.id}", method: :post do |f| %>
+  <div>
+    <h4>id</h4>
+    <p><%= @user.id %></p>
+  </div>
+  <div>
+    <h4><%= f.label :username %></h4>
+    <p><%= f.text_field :username %></p>
+  </div>
+  <div>
+    <h4><%= f.label :email %></h4>
+    <p><%= f.text_field :email %></p>
+  </div>
+  <div>
+    <h4><%= f.label :team_id %></h4>
+    <p><%= f.select :team_id , @select_team_num, { include_blank: '選択してください'} %></p>
+  </div>
+  <div>
+    <%= f.submit '変更' %>
+  </div>
+<% end %>
+<%=link_to "taskを見る", tasks_path%>

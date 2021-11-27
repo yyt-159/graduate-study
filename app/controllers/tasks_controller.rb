@@ -12,6 +12,9 @@ class TasksController < ApplicationController
   end
 
   def show
+    if current_user.admin
+      @task = Task.find_by(id:params[:id])
+    end
     @params = params
     @sub_tasks = Task.find_by(id: params[:id]).sub_tasks.all
   end
@@ -27,29 +30,57 @@ class TasksController < ApplicationController
   end
 
   def edit
-
+    if current_user.admin
+      @task = Task.find_by(id:params[:id])
+    end
   end
 
   def update
+    if current_user.admin
+      @task = Task.find_by(id:params[:id])
+    end
     @task.update(task_params)
     redirect_to @task
   end
 
   def destroy
+    if current_user.admin
+      @task = Task.find_by(id:params[:id])
+    end
     @task.destroy
-    redirect_to tasks_url
+    if current_user.admin
+      redirect_to "/admin/index"
+    else
+      redirect_to tasks_url
+    end
   end
 
   def done
+    if current_user.admin
+      @task = Task.find_by(id:params[:id])
+    end
     @task.completed = true
     @task.save!
-    redirect_to tasks_url
+    if current_user.admin
+      redirect_to "/admin/index"
+    else
+      redirect_to tasks_url
+    end
+    
   end
 
   def done_back
+    if current_user.admin
+      @task = Task.find_by(id:params[:id])
+    end
     @task.completed = false
     @task.save!
-    redirect_to tasks_url
+    if current_user.admin
+      redirect_to "/admin/index"
+    else
+      redirect_to tasks_url
+    end
+    
   end
 
   private

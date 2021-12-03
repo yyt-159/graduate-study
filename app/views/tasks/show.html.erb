@@ -48,6 +48,7 @@
     <td><%=remaining_day?(target_date)%></td>
     <% end %>
     </td>
+    <td>獲得ポイント:3</td>
     <td><%= link_to '編集', edit_task_sub_task_path(@task.id,sub_task) %></td>
     <td><%= link_to '削除', task_sub_task_path(@task.id,sub_task), method: :delete, data: {confirm: "削除しますか？"} %></td>
   </tr>
@@ -58,7 +59,13 @@
 
 <%# resoucesでsub_taskをネストしたため、特殊な表記になる %>
   <%= form_for [@task,@sub_task]  do |f| %>
-  
+  <%# エラーメッセージの表示 %>
+    <% if @sub_task.errors.any? %>
+      <%= @sub_task.errors.count %>件のエラー
+      <% @sub_task.errors.full_messages.each do |message| %>
+        <%= message %> 
+      <% end %>
+    <% end %>
     <div>
     <%= f.label :title %>
     <%= f.text_field :title, size: 50 %>
@@ -68,14 +75,11 @@
     <%= f.text_area :description %>
   </div>
   <div>
-    <%= f.label :public_sub_task%>
-    <%= f.check_box :public_sub_task,{}, "true", "false" %>
+    <%= f.label :期日%>
+    <%= f.date_field :target_at %>
+  </div>
     <%# サブタスクにタスクのidを与える %>
     <%= f.hidden_field :task_id, value: @task.id %>
-  </div>
     <%= f.submit '決定' %>
   <% end %>
 </div>
-  <%# デバッグ用 %>
-  <h1>@task.id=<%= @task.id%></h1>
-  <h1>params→ <%= params %></h1>

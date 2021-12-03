@@ -41,6 +41,18 @@ before_action :authenticate_admin!
     redirect_to "/admin/index"
   end
 
+  def reset_user_term_point
+    users = User.all
+    users.each do |user|
+      if user.term_point && user.term_point > 0
+        user.term_point = 0
+        user.save
+      end
+    end
+    flash[:notice] = "正常にリセットされました"
+    redirect_to "/set_term"
+  end
+
   private
   def authenticate_admin!
     redirect_to(root_url) unless current_user.admin

@@ -23,6 +23,18 @@
     <p><%=user.team_id%></p>
   </div>
     <div>
+      <h4>target_point</h4>
+      <p><%=user.target_point%></p>
+    </div>
+      <div>
+        <h4>term_point</h4>
+        <p><%=user.term_point%></p>
+    </div>
+      <div>
+        <h4>total_done_task</h4>
+        <p><%=user.total_done_task%></p>
+    </div>
+    <div>
     <h4>tasks</h4>
     <%user.tasks.each do |task|%>
       <tr>
@@ -75,3 +87,4 @@
   <p>~~~~~~~~~~~~~~</p>
 <% end %>
 <%=link_to "チームポイントをリセット","/admin/reset/team_point", method: :post, data: {confirm: "本当にリセットしますか？"} %>
+<%=link_to "実験期間のページ", set_term_index_path %>

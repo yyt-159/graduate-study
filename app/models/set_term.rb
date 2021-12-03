@@ -1,0 +1,2 @@
+class SetTerm < ApplicationRecord
+end

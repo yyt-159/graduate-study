@@ -7,7 +7,11 @@ class SubTasksController < ApplicationController
 
   def done
     @sub_task.completed = true
-    @sub_task.save!
+    if @sub_task.done_times == 0
+      point_create(current_user,3)
+      @sub_task.done_times += 1
+    end
+    @sub_task.save
     redirect_to task_path(params[:task_id])
   end
 
@@ -18,8 +22,13 @@ class SubTasksController < ApplicationController
   end
 
   def create
-    @sub_task = SubTask.create(sub_task_params)
-    redirect_to task_path(params[:task_id]) 
+    if @sub_task = SubTask.create(sub_task_params)
+      # サブタスク作成時にポイントを生成
+      point_create(current_user,1)
+      redirect_to task_path(params[:task_id]) 
+    else
+      render :new
+    end
   end
 
   def edit

@@ -7,7 +7,7 @@ module TasksHelper
 
 # 関数名:task_progress_calcu(task)
 # 引数:メインタスク
-# 説明:メインタスクの進捗を表示します。%の数字を返します。
+# 説明:メインタスクの進捗を表示します。%と%の数字を返します。
 # 使用場所: app/views/tasks/show.html.erb, app/views/tasks/index.html.erb, app/views/team/index.html.erb
   def task_progress_calcu(task)
     # タスクの中のサブタスクを全て取得
@@ -26,5 +26,15 @@ module TasksHelper
     result = done_sub_task_num.to_f/sub_task_num.to_f
     calcu_result = result.round(3)*100
     return "#{calcu_result.round(3)}%"
+  end
+
+  # teamの期間中のポイントを計算します
+  def team_term_point_cucl(current_user)
+    @team_users = User.where(team_id:current_user.team_id) if current_user.team_id
+    @team_term_point = 0
+    @team_users.each do |user|
+      @team_term_point += user.term_point if user.term_point
+    end
+    return @team_term_point
   end
 end

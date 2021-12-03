@@ -1,8 +1,10 @@
 <h1>Tasks#index</h1>
 <p>Find me in app/views/tasks/index.html.erb</p>
+<p>今日のポイント:<%=@today_point%></p>
+<p>目標ポイント:~</p>
 <table>
   <tr>
-    <th>Id</th><th>Title</th><th>Description</th><th>完了</th><th>達成度</th><th></th>
+    <th>Id</th><th>Title</th><th>Description</th><th>完了</th><th>達成度</th><th>現在獲得できるポイント</th>
   </tr>
   <% @tasks.each do |task| %>
   <tr>
@@ -17,6 +19,7 @@
       <% end %>
     </td>
     <td><%= task_progress_calcu(task) %></td>
+    <td><%= task_point_culc(task) %></td>
     <td><%= link_to 'もっとみる', task_path(task) %></td>
     <td><%= link_to '編集', edit_task_path(task) %></td>
     <td><%= link_to '完了', done_task_path(task) %></td>

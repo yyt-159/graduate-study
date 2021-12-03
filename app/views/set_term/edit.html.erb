@@ -1,0 +1,6 @@
+<h1>SetTerm#edit</h1>
+<p>Find me in app/views/set_term/edit.html.erb</p>
+<%= form_for @setTerm, url: set_term_update_path(params[:id]) do |f| %>
+  <%= f.date_field :term %>
+  <%= f.submit %>
+<% end %>

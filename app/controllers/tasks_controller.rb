@@ -9,13 +9,13 @@ class TasksController < ApplicationController
   def index
     @tasks = current_user.tasks
     @user = current_user
+    today_point_culc(current_user)
   end
 
   def show
     if current_user.admin
       @task = Task.find_by(id:params[:id])
     end
-    @params = params
     @sub_tasks = Task.find_by(id: params[:id]).sub_tasks.all
   end
 
@@ -25,8 +25,12 @@ class TasksController < ApplicationController
 
   def create
     @task = current_user.tasks.new task_params
-    @task.save!
-    redirect_to @task
+    if @task.save
+      redirect_to @task
+    else
+      render :new
+    end
+    
   end
 
   def edit
@@ -60,6 +64,12 @@ class TasksController < ApplicationController
       @task = Task.find_by(id:params[:id])
     end
     @task.completed = true
+    if @task.done_times == 0
+      point_create(current_user,task_point_culc(@task))
+      @task.done_times += 1
+      current_user.total_done_task += 1 if current_user.total_done_task
+      current_user.save
+    end
     @task.save!
     if current_user.admin
       redirect_to "/admin/index"

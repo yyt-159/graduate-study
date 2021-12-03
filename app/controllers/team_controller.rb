@@ -17,17 +17,14 @@ class TeamController < ApplicationController
   def member
     # カレンとユーザーのチームメイトを持ってきて、代入
     @my_team_members = User.where(team_id:current_user.team_id)
+    @show_team_id = params[:id]
   end
 
   def team_rank
-    
+    @team_order = Team.order(team_total_point: :desc)
   end
 
   def individual_rank
   end
 
-  private
-  # def set_task
-  #   @task = Task.find_by(id:params[:id])
-  # end
 end

@@ -21,7 +21,8 @@
       
       <!-- ▼ ログインしてたら名前表示  -->
       <% if user_signed_in? %>
-      username : <%= current_user.username %>さん
+      username:<%= current_user.username %>さん
+      <%=link_to "プロフィール", "/"%>
       あなたのチーム : チーム<%= current_user.team_id %>
       <%= link_to 'タスクを追加', new_task_url %>
       <%= link_to 'タスク一覧', tasks_url %>

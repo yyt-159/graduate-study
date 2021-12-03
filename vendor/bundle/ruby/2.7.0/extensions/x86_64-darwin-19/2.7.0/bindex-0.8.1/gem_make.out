@@ -1,0 +1,15 @@
+current directory: /Users/aoyamasyun-ichi/rails-project/graduate-study/vendor/bundle/ruby/2.7.0/gems/bindex-0.8.1/ext/skiptrace
+/Users/aoyamasyun-ichi/.rbenv/versions/2.7.5/bin/ruby -I /Users/aoyamasyun-ichi/.rbenv/versions/2.7.5/lib/ruby/site_ruby/2.7.0 -r ./siteconf20211204-29284-1l34749.rb extconf.rb
+creating Makefile
+
+current directory: /Users/aoyamasyun-ichi/rails-project/graduate-study/vendor/bundle/ruby/2.7.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= clean
+
+current directory: /Users/aoyamasyun-ichi/rails-project/graduate-study/vendor/bundle/ruby/2.7.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\=
+compiling cruby.c
+linking shared-object skiptrace/internal/cruby.bundle
+
+current directory: /Users/aoyamasyun-ichi/rails-project/graduate-study/vendor/bundle/ruby/2.7.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= install
+/usr/bin/install -c -m 0755 cruby.bundle ./.gem.20211204-29284-1nl9uy4/skiptrace/internal

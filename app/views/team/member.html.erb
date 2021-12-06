@@ -1,13 +1,10 @@
-<h1>Team#member</h1>
-<p>Find me in app/views/team/member.html.erb</p>
 <h3>チーム<%=@show_team_id%>メンバー</h3>
-<% @my_team_members.each do |m| %>
-  <% unless m.admin %>
-      <div>
-    <h4><%=m.username%></h4>
-    <p>獲得ポイント数:<%=m.term_point%></p>
-    <p>終わったタスク数:<%=m.total_done_task%></p>
-  </div>
+  <% @my_team_members.each do |m| %>
+  <ul class="list-group mb-3">
+    <% unless m.admin %>
+      <li class="list-group-item list-group-item-primary"><%=m.username%></li>
+      <li class="list-group-item">獲得ポイント数:<%=m.term_point%></li>
+      <li class="list-group-item">終わったタスク数:<%=m.total_done_task%></li>
+    <% end %>
+    </ul>
   <% end %>
-<% end %>
-<%= link_to 'チームタスク一覧に戻る', "/team/#{current_user.team_id}/index" %>

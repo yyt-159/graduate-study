@@ -1,61 +1,48 @@
-<h1>Tasks#show</h1>
-<p>Find me in app/views/tasks/show.html.erb</p>
-<table>
-  <tr>
-    <th>タスク名</th>
-    <td><%= @task.title %></td></tr>
-  <tr>
-    <th>説明</th>
-    <td><%= @task.description %></td>
-  </tr>
-  <tr>
-    <th>期日</th>
-    <% if @task.target_at %>
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title"><%= @task.title %></h4>
+    <h6 class="card-subtitle text-muted">
+      <% if @task.target_at %>
       <%target_date = @task.target_at %>
-      <td style='color:<%= is_deadline_over?(target_date) %>'><%= target_date.year %>/<%= target_date.month %>/<%= target_date.day %></td>
-    <td><%=remaining_day?(target_date)%></td>
-    <% end %>
-  </tr>
-  <tr>
-    <th>達成度</th>
-    <td><%= task_progress_calcu(@task) %>%</td>
-  </tr>  
-</table>
-<p><%= link_to '編集', edit_task_path(@task) %></p>
-<p><%= link_to '一覧に戻る', tasks_url %></p>
-<h3>サブタスク一覧</h3>
-<% @sub_tasks.each do |sub_task| %>
-  <tr>
-  <% if sub_task.completed %>
-    <td></td>
-  <% else %>
-    <td></td>
-  <% end %>
-    <td><%= sub_task.id %></td>
-    <td><%= sub_task.title %></td>
-    <td><%= sub_task.description %></td>
-   <td>
-   <% if sub_task.completed %>
-      <%= link_to '✅', done_back_task_sub_task_path(@task.id,sub_task), method: :post %>
-    <% else %>
-      <%= link_to '☑️', done_task_sub_task_path(@task.id,sub_task), method: :post %>
-   <% end %>
-    </td>
-    <td>期日
-      <% if sub_task.target_at %>
-      <%target_date = sub_task.target_at %>
-      <td style='color:<%= is_deadline_over?(target_date) %>'><%= target_date.year %>/<%= target_date.month %>/<%= target_date.day %></td>
-    <td><%=remaining_day?(target_date)%></td>
-    <% end %>
-    </td>
-    <td>獲得ポイント:3</td>
-    <td><%= link_to '編集', edit_task_sub_task_path(@task.id,sub_task) %></td>
-    <td><%= link_to '削除', task_sub_task_path(@task.id,sub_task), method: :delete, data: {confirm: "削除しますか？"} %></td>
-  </tr>
-  <% end %>
+      <p style='color:<%= is_deadline_over?(target_date) %>' class="text-muted"><%= target_date%>/<%=remaining_day?(target_date)%></p>
+      <% end %>
+    </h6>
+    <div class="d-flex justify-content-between">
+      <h6 class="card-subtitle text-muted mb-2"><%= task_progress_calcu(@task) %></h6>
+      <h6 class="card-subtitle text-muted mb-2">
+        <% if @task.public_task %>
+          <span class="badge rounded-pill bg-success">Public</span>
+        <% else %>
+          <span class="badge rounded-pill bg-dark">Private</span>
+        <% end %>
+      </h6>
+    </div>
+    <p class="card-text">
+      <%= @task.description %>
+    </p>
+    <div class="d-flex flex-row-reverse">
+      <%= link_to 'edit', edit_task_path(@task) , {class: "btn btn-outline-primary"}%>
+    </div>
+    
 
-<div style="width: 300px;">
-<p>サブタスクを作成する</p>
+<h5 class="mt-4">SUBTASK</h5>
+<% @sub_tasks.each do |sub_task| %>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item d-flex flex-wrap">
+      <% if sub_task.completed %>
+        <%= link_to '✅', done_back_task_sub_task_path(@task.id,sub_task), {method: :post, class:"pe-2"} %>
+      <% else %>
+        <%= link_to '☑️', done_task_sub_task_path(@task.id,sub_task), {method: :post, class:"pe-2"} %>
+      <% end %>
+      <% if sub_task.done_times == 0 && @task.done_times == 0%>
+        <span class="badge bg-danger me-2 ms-2 align-self-center">3</span>
+      <% end %>
+      <div style="word-break: break-all;"><%= sub_task.title %></div>
+      <%= link_to '削除', task_sub_task_path(@task.id,sub_task), {method: :delete, class:"ms-auto"}%>
+    </li> 
+  </ul>
+<% end %>
+<div>
 
 <%# resoucesでsub_taskをネストしたため、特殊な表記になる %>
   <%= form_for [@task,@sub_task]  do |f| %>
@@ -67,19 +54,20 @@
       <% end %>
     <% end %>
     <div>
-    <%= f.label :title %>
-    <%= f.text_field :title, size: 50 %>
-  </div>
-  <div>
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
-  <div>
-    <%= f.label :期日%>
-    <%= f.date_field :target_at %>
+    <div class="form-group mb-4">
+    <%= f.label :title ,class:"form-label", for:"exampleInputEmail1"%>
+    <%= f.text_field :title, id:"form5Example1", class:"form-control" ,placeholder:"Title"%>
+    </div>
   </div>
     <%# サブタスクにタスクのidを与える %>
     <%= f.hidden_field :task_id, value: @task.id %>
-    <%= f.submit '決定' %>
+    <%= button_tag(type: 'submit', class: "btn btn-primary btn-block mb-4") do %>
+    <% if @task.done_times == 0 %>
+      <span class="badge bg-danger me-auto">1</span>
+    <% end %>
+      ADD
+    <% end %>
   <% end %>
+</div>
+</div>
 </div>

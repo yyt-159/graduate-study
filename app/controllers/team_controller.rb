@@ -8,16 +8,21 @@ class TeamController < ApplicationController
     task_all = Task.all.order(created_at: "DESC")
     task_all.each do |task|
       user = User.find_by(id:task.user_id)
-      if task.public_task && user.team_id == current_user.team_id
+      # 「completedしているタスクは含めない」かつ「パブリックであるものを含める」かつ「チームが一緒の人」
+      if !task.completed && task.public_task && user.team_id == current_user.team_id
         @tasks += [task]
       end
     end
   end
 
   def member
-    # カレンとユーザーのチームメイトを持ってきて、代入
-    @my_team_members = User.where(team_id:current_user.team_id)
+    # paramsのidを
     @show_team_id = params[:id]
+    if @show_team_id == current_user.team_id
+      @my_team_members = User.where(team_id:current_user.team_id)
+    else
+      @my_team_members = User.where(team_id:@show_team_id)
+    end
   end
 
   def team_rank

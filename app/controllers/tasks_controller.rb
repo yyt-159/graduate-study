@@ -7,16 +7,20 @@ class TasksController < ApplicationController
   before_action :set_task_new, only: [:new]
 
   def index
-    @tasks = current_user.tasks
+    @tasks = Task.where(user_id:current_user.id).order(target_at: "ASC")
     @user = current_user
     today_point_culc(current_user)
   end
 
   def show
-    if current_user.admin
-      @task = Task.find_by(id:params[:id])
+    if current_user
+      if current_user.admin
+        @task = Task.find_by(id:params[:id])
+      end
+      @sub_tasks = Task.find_by(id: params[:id]).sub_tasks.all
+      @back_sign = true
+      @back_url = tasks_url
     end
-    @sub_tasks = Task.find_by(id: params[:id]).sub_tasks.all
   end
 
   def new

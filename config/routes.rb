@@ -16,7 +16,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
   # set_term
   resources :set_term, only: [:index, :new, :create, :edit, :destroy] do
     post :update
@@ -31,6 +30,7 @@ Rails.application.routes.draw do
   get 'admin/index' => "admin#index"
   post "admin/edit/update/:id" => "admin#update"
   get "admin/edit/:id" => "admin#edit"
+  post "admin/delete/:id" => "admin#destroy"
   post "admin/reset/team_point" => "admin#reset_team_point"
   get "admin/team/edit/:id" => "admin#team_edit"
   post "admin/team/team_update/:id" => "admin#team_update"

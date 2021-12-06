@@ -22,6 +22,12 @@ before_action :authenticate_admin!
     redirect_to "/admin/index"
   end
 
+  def destroy
+    @user = User.find_by(id:params[:id])
+    flash[:notice] = "正常に削除できました" if @user.destroy
+    redirect_to "/admin/index"
+  end
+
   def team_edit
     @team = Team.find_by(id:params[:id])
   end

@@ -1,14 +1,16 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
 <% if current_user %>
-<h3>名前</h3>
-<p><%=current_user.username%></p>
-<h3>email</h3>
-<p><%=current_user.email%></p>
-<h3>総合ポイント</h3>
-<p><%=current_user.user_gain_point%>点</p>
-<%=link_to "編集する", "/home/edit/#{current_user.id}"%>
+  <h3>名前</h3>
+  <p><%=current_user.username%></p>
+  <h3>email</h3>
+  <p><%=current_user.email%></p>
+  <h3>総合ポイント</h3>
+  <p><%=current_user.user_gain_point%>点</p>
+  <%=link_to "編集する", "/home/edit/#{current_user.id}"%>
+  <%= button_to 'ログアウト', destroy_user_session_path, {method: :delete, class: 'btn btn-danger'}%>
+  <% if current_user.admin %>
+    <p><%= link_to 'admin', "/admin/index" %></p>
+  <% end %>
 <% else %>
-<p>ログインまたはサインインをする</p>
+  <p><%= link_to 'ログイン', new_user_session_path%>または<%= link_to '新規登録', new_user_registration_path%>をする</p>
 <% end %>
 

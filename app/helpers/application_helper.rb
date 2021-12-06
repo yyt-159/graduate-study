@@ -30,7 +30,10 @@ module ApplicationHelper
       return ""
     else
       remaining_day = date - today
-      return "あと#{remaining_day.to_i}日"
+      if remaining_day == 1
+        return "#{remaining_day.to_i}day"
+      end
+      return "#{remaining_day.to_i}days"
     end
   end
 
@@ -99,7 +102,7 @@ end
 # 使用場所:
 def task_point_culc(task)
    unless task.done_times == 0
-    return "ポイント獲得済み"
+    return 
    end
   today = Date.today
   if task.target_at
@@ -113,7 +116,7 @@ def task_point_culc(task)
       elsif remaining_day > -1 then
         1
       else
-        0
+        
     end
   end
    

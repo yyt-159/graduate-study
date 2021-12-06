@@ -1,30 +1,41 @@
-<h1>Tasks#index</h1>
-<p>Find me in app/views/tasks/index.html.erb</p>
 <p>今日のポイント:<%=@today_point%></p>
-<p>目標ポイント:~</p>
-<table>
-  <tr>
-    <th>Id</th><th>Title</th><th>Description</th><th>完了</th><th>達成度</th><th>現在獲得できるポイント</th>
-  </tr>
+<div class="p-3 w-200 row d-flex justify-content-center">
   <% @tasks.each do |task| %>
-  <tr>
-    <td><%= task.id %></td>
-    <td><%= task.title %></td>
-    <td><%= task.description %></td>
-    <td>
-      <% if task.completed %>
-        <%= link_to '✅', done_back_task_path(task), method: :post %>
-      <% else %>
-        <%= link_to '☑️', done_task_path(task), method: :post %>
-      <% end %>
-    </td>
-    <td><%= task_progress_calcu(task) %></td>
-    <td><%= task_point_culc(task) %></td>
-    <td><%= link_to 'もっとみる', task_path(task) %></td>
-    <td><%= link_to '編集', edit_task_path(task) %></td>
-    <td><%= link_to '完了', done_task_path(task) %></td>
-    <td><%= link_to '削除', task_path(task), method: :delete , data: {confirm: "削除しますか？"}%></td>
-  </tr>
+    <div class="card col-sm-3 mb-2 mx-2" style="width: 20rem;">
+    <div class="card-body">
+    <div class="d-flex justify-content-between">
+    <% if task.completed %>
+      <h5 class="card-title text-dark font-weight-bold"><s><%= task.title %></s></h5>
+    <% else %>
+      <h5 class="card-title text-dark font-weight-bold"><span class="badge bg-danger me-2 align-self-center"><%= task_point_culc(task) %></span><%= task.title %></h5>
+    <% end %>
+      <h3><%= link_to '×', task_path(task), method: :delete , data: {confirm: "削除しますか？"}, class: "text-muted"%></h3>
+    </div>
+    <% if task.completed %>
+      <s><h6 class="card-subtitle mb-2 text-muted"><%= task.target_at %>/<%=remaining_day?(task.target_at)%></h6></s>
+    <% else %>
+      <h6 class="card-subtitle mb-2 text-muted"><%= task.target_at %>/<%=remaining_day?(task.target_at)%></h6>
+    <% end %>
+    <div class="d-flex justify-content-between">
+      <h6 class="card-subtitle text-muted mb-2"><%= task_progress_calcu(task) %></h6>
+      <h6 class="card-subtitle text-muted mb-2">
+        <% if task.public_task %>
+          <span class="badge rounded-pill bg-success">Public</span>
+        <% else %>
+          <span class="badge rounded-pill bg-dark">Private</span>
+        <% end %>
+      </h6>
+    </div>
+      <p class="card-text text-dark"><%= task.description %></p>
+      <div class="d-flex justify-content-end">
+        <%= link_to 'subtask', task_path(task) , {class: "card-link btn btn-outline-primary"}%>
+        <% if task.completed %>
+          <%= link_to 'back', done_back_task_path(task), {method: :post , class: "card-link btn btn-outline-danger"}%>
+        <% else %>
+          <%= link_to 'done', done_task_path(task), {method: :post ,class: "card-link btn btn btn-primary"}%>
+        <% end %>
+      </div>
+    </div>
+    </div>
   <% end %>
-</table>
-<p><%= link_to 'ToDoの作成', new_task_path %></p>
+</div>

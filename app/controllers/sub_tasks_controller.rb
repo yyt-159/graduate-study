@@ -7,7 +7,8 @@ class SubTasksController < ApplicationController
 
   def done
     @sub_task.completed = true
-    if @sub_task.done_times == 0
+    parent_task = Task.find_by(id:params[:task_id])
+    if @sub_task.done_times == 0 && parent_task.done_times == 0
       point_create(current_user,3)
       @sub_task.done_times += 1
     end
@@ -23,8 +24,12 @@ class SubTasksController < ApplicationController
 
   def create
     if @sub_task = SubTask.create(sub_task_params)
-      # サブタスク作成時にポイントを生成
-      point_create(current_user,1)
+      parent_task = Task.find_by(id:params[:task_id])
+      # 親タスクが終了していたらポイントは作らない
+      if parent_task.done_times == 0
+        # サブタスク作成時にポイントを生成
+        point_create(current_user,1)
+      end
       redirect_to task_path(params[:task_id]) 
     else
       render :new

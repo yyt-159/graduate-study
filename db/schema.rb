@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_03_150115) do
+ActiveRecord::Schema.define(version: 2021_12_06_130729) do
 
   create_table "points", force: :cascade do |t|
     t.integer "point"
@@ -28,12 +28,9 @@ ActiveRecord::Schema.define(version: 2021_12_03_150115) do
 
   create_table "sub_tasks", force: :cascade do |t|
     t.string "title"
-    t.text "description"
-    t.date "target_at"
     t.date "completed_at"
     t.boolean "completed", default: false, null: false
     t.integer "task_id"
-    t.boolean "public_sub_task", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "done_times", default: 0

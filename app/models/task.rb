@@ -5,4 +5,5 @@ class Task < ApplicationRecord
   has_many :sub_tasks , dependent: :destroy
 
   validates :title, presence: true
+  validates :target_at, presence: true
 end

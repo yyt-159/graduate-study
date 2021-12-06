@@ -1,10 +1,11 @@
-<h1>Team#team_rank</h1>
-<p>Find me in app/views/team/team_rank.html.erb</p>
-<p>ランキング</p>
-<% index = 1 %>
-<% @team_order.each do |team|%>
-<h1><%=index%>位</h1>
-<p><%=link_to "team#{team.id}","/team/#{team.id}/member"%></p>
-<p><%=team.team_total_point%>points</p>
-<% index += 1 %>
-<% end %>
+<h3>ランキング</h3>
+
+  <% index = 1 %>
+  <% @team_order.each do |team|%>
+  <ul class="list-group mb-3">
+    <li class="list-group-item list-group-item-dark"><%=index%>位</li>
+    <li class="list-group-item"><%=link_to "team#{team.id}","/team/#{team.id}/member"%></li>
+    <li class="list-group-item"><%=team.team_total_point%>points</li>
+    <% index += 1 %>
+    </ul>
+  <% end %>

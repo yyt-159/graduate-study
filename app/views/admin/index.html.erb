@@ -85,9 +85,10 @@
     <p><%= team.team_total_point %></p>
   </div>
   <div>
-  <p><%=link_to "チームポイントをset","/admin/team/edit/#{team.id}"%></p>
+  <%# <p><%=link_to "チームポイントをset","/admin/team/edit/#{team.id}"%>
   </div>
   <p>~~~~~~~~~~~~~~</p>
 <% end %>
-<%=link_to "チームポイントをリセット","/admin/reset/team_point", method: :post, data: {confirm: "本当にリセットしますか？"} %>
-<%=link_to "実験期間のページ", set_term_index_path %>
+<p><%=link_to "チームポイントをリセット","/admin/reset/team_point", method: :post, data: {confirm: "本当にリセットしますか？"} %></p>
+<p><%=link_to "実験期間のページ", set_term_index_path %></p>
+

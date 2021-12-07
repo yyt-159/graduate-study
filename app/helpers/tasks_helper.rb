@@ -28,13 +28,4 @@ module TasksHelper
     return "#{calcu_result.round(3)}%"
   end
 
-  # teamの期間中のポイントを計算します
-  def team_term_point_cucl(current_user)
-    @team_users = User.where(team_id:current_user.team_id) if current_user.team_id
-    @team_term_point = 0
-    @team_users.each do |user|
-      @team_term_point += user.term_point if user.term_point
-    end
-    return @team_term_point
-  end
 end

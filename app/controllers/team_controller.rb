@@ -3,12 +3,12 @@ class TeamController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    # 自分のタスクを持ってきて、代入
-    @tasks = Task.where(id:params[:id]).order(created_at: "DESC")
-    task_all = Task.all.order(created_at: "DESC")
+    #期限の順に変えた
+    task_all = Task.all.order(target_at: "DESC")
+    @tasks = []
     task_all.each do |task|
       user = User.find_by(id:task.user_id)
-      # 「completedしているタスクは含めない」かつ「パブリックであるものを含める」かつ「チームが一緒の人」
+      # 「completedしているタスクは含めない」かつ「パブリックであるものを含める」かつ「チームが一緒の人を含める」
       if !task.completed && task.public_task && user.team_id == current_user.team_id
         @tasks += [task]
       end
@@ -16,7 +16,7 @@ class TeamController < ApplicationController
   end
 
   def member
-    # paramsのidを
+    # paramsのidを代入（current_userとは違うteamのページを表示させるため）
     @show_team_id = params[:id]
     if @show_team_id == current_user.team_id
       @my_team_members = User.where(team_id:current_user.team_id)

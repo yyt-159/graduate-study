@@ -1,5 +1,5 @@
 <div>
-  <h3>チーム合計ポイント:<%=team_term_point_cucl(current_user)%></h3>
+  <h3>チーム合計ポイント:<%=current_user_team_point_culc(current_user)%></h3>
   <h3>チーム順位:<%=team_rank_culc(current_user)%></h3>
   <p><%=link_to 'チーム順位を見る',"/team/team_rank"%></p>
   <%= link_to 'チームメンバーを確認する', "/team/#{current_user.team_id}/member" %>

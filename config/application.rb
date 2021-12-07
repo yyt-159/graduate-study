@@ -31,7 +31,7 @@ module GraduateStudy
 
     # Don't generate system test files.
     config.time_zone = 'Asia/Tokyo'
-    config.active_record.default_timezone = :local
+    config.active_record.default_timezone = :local 
     config.generators.system_tests = nil
   end
 end

@@ -2,10 +2,10 @@
   <% @setTerms.each do |s| %>
     <h3>期間</h3>
     <p><%=s.term%></p>
-    <%=link_to "実験期間を編集する", edit_set_term_path(s.id) %>
-    <%=link_to "この実験期間を削除する", set_term_path(s.id), method: :delete%>
+    <p><%=link_to "実験期間を編集する", edit_set_term_path(s.id) %></p>
+    <p><%=link_to "この実験期間を削除する", set_term_path(s.id), method: :delete%></p>
   <% end %>
-  <%=link_to "実験者の期間中のポイントをリセットする", "/admin/reset_user_term_point", method: :post, data: {confirm: "本当にリセットしますか？"}%>
+  <p><%=link_to "実験者の期間中のポイントをリセットする", "/admin/reset_user_term_point", method: :post, data: {confirm: "本当に期間pointをリセットしますか？"}%></p>
 <%else%>
   <p>実験期間が設定されていません</p>
   <%=link_to "実験期間を設定する", new_set_term_path %>

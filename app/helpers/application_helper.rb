@@ -1,5 +1,6 @@
 module ApplicationHelper
 
+
 #コピー用↓
 # 関数名:
 # 引数:
@@ -67,6 +68,7 @@ module ApplicationHelper
 
 ### 期間中の関数 ###
 
+# point_createとともに使うもの
 def is_term_point?
   @last_point = Point.last
   @last_point_date = Point.last.created_at.to_date
@@ -116,7 +118,6 @@ def task_point_culc(task)
       elsif remaining_day > -1 then
         1
       else
-        
     end
   end
    
@@ -136,9 +137,11 @@ end
   def point_create(current_user,num)
     Point.create(point:num,user_id:current_user.id) if num && current_user
     ## point_create後すぐuserとteamの期間中のポイント加算、userのuser_gain_pointに加算する処理をする
-    user_gain_point_culc(current_user,num)
-    user_term_point_culc(current_user)
-    team_term_point_culc(current_user)
+    if num
+      user_gain_point_culc(current_user,num)
+      user_term_point_culc(current_user)
+      team_term_point_culc(current_user)
+    end
   end
 
 end

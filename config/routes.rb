@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     member do
       post :done
       post :done_back
+      post :open_false
     end
     resources :sub_tasks do
       member do

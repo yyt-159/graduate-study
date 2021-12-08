@@ -8,8 +8,8 @@ class TeamController < ApplicationController
     @tasks = []
     task_all.each do |task|
       user = User.find_by(id:task.user_id)
-      # 「completedしているタスクは含めない」かつ「パブリックであるものを含める」かつ「チームが一緒の人を含める」
-      if !task.completed && task.public_task && user.team_id == current_user.team_id
+      # 「completedしているタスクは含めない」かつ「パブリックであるものを含める」かつ「チームが一緒の人を含める」かつ「taskがopenなものを含める」
+      if !task.completed && task.public_task && user.team_id == current_user.team_id && task.open
         @tasks += [task]
       end
     end

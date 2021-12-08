@@ -9,7 +9,8 @@
     <% else %>
       <h5 class="card-title text-dark font-weight-bold"><span class="badge bg-danger me-2 align-self-center"><%= task_point_culc(task) %></span><%= task.title %></h5>
     <% end %>
-      <h3><%= link_to '×', task_path(task), method: :delete , data: {confirm: "削除しますか？"}, class: "text-muted"%></h3>
+      <%# <h3><%= link_to '×', task_path(task), method: :delete , data: {confirm: "削除しますか？"}, class: "text-muted"%>
+      <h3><%= link_to '×', open_false_task_path(task),method: :post, data: {confirm: "削除しますか？"}, class: "text-muted"%></h3>
     </div>
     <% if task.completed %>
       <s><h6 class="card-subtitle mb-2 text-muted"><%= task.target_at %>/<%=remaining_day?(task.target_at)%></h6></s>

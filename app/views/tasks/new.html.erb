@@ -23,7 +23,7 @@
     </div>
     <div>
       <%= f.label :public,class:"form-check-label mb-2",for:"exampleCheck1"%>
-      <%= f.check_box :public_task,{}, "true", "false"%>
+      <%= f.check_box :public_task,{checked: true}, "true", "false" %>
     </div>
       <%= f.submit 'ADD' ,class:"btn btn-primary btn-block"%>
     <% end %>

@@ -7,9 +7,17 @@ class TasksController < ApplicationController
   before_action :set_task_new, only: [:new]
 
   def index
-    @tasks = Task.where(user_id:current_user.id).order(target_at: "ASC")
+    @tasks = Task.where(user_id:current_user.id, open:true).order(target_at: "ASC")
     @user = current_user
     today_point_culc(current_user)
+  end
+
+  # userには見られず、管理者のみタスクを見れる状態にします。
+  def open_false
+    @task = Task.find_by(id:params[:id])
+    @task.open = false
+    @task.save
+    redirect_to tasks_url
   end
 
   def show
@@ -68,6 +76,7 @@ class TasksController < ApplicationController
       @task = Task.find_by(id:params[:id])
     end
     @task.completed = true
+    @task.completed_at = Date.today
     if @task.done_times == 0
       point_create(current_user,task_point_culc(@task))
       @task.done_times += 1
@@ -88,6 +97,7 @@ class TasksController < ApplicationController
       @task = Task.find_by(id:params[:id])
     end
     @task.completed = false
+    @task.completed_at = nil
     @task.save!
     if current_user.admin
       redirect_to "/admin/index"
